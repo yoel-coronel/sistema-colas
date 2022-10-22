@@ -25,6 +25,7 @@ Route::apiResource('/ticketeras',\App\Http\Controllers\Mantenimientos\Ticketeras
 Route::apiResource('/query_type_customers',\App\Http\Controllers\Mantenimientos\QueryTypeCustomerController::class);
 Route::get('/query_type_customers_all',[\App\Http\Controllers\Mantenimientos\QueryTypeCustomerController::class,'getQueryTypeCustomers']);
 Route::apiResource('/carousels',\App\Http\Controllers\Mantenimientos\CarouselController::class);
+Route::get("/carousels/load/{id}",[\App\Http\Controllers\Mantenimientos\CarouselController::class,'getFileContent']);
 
 //reportes - listas
 

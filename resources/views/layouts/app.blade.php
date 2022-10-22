@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta name="urlBase" content="{{ env('APP_URL')}}">
+    <meta name="urlBase" content="{{ env('APP_URL','http://192.168.55.22:8001')}}">
     <meta name="timerProgressBarCall" content="{{ env('TIMER_PROGREE_BAR_CALL','60000')}}">
     <meta name="speak_enable" content="{{ config('app.speak_enable') }}">
     <meta name="speak_time_reload" content="{{ config('app.speak_time_reload') }}">

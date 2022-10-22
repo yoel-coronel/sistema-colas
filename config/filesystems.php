@@ -53,6 +53,11 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
+        'archivos' => [
+            'driver' => 'local',
+            'root' => env('URL_FILE_COROUSEL'),
+            'visibility' => 'public',
+        ],
     ],
 
     /*

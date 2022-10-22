@@ -23,8 +23,10 @@ namespace  App\Impresiones;
         $modulo = Modulo::first();
         if($modulo){
             $ticketera = $modulo->ticketera;
+
             if($ticketera){
-                if ($ticketera->level === 1) {
+				
+                if (intval($ticketera->level) === 1) {
                     return new NetworkPrintConnector($ticketera->ip_ticket, 9100);
                 }else{
                     $pass = $ticketera->password_host;

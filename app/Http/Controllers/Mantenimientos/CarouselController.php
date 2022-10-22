@@ -31,7 +31,16 @@ class CarouselController extends Controller
     public function store(Request $request)
     {
         try {
-            $carousel = Carousel::create($request->all());
+            $data =$request->all();
+
+            if($request->hasFile('path')){
+                $file = $request->file('path');
+                $nombrearchivo = 'file'.time().".".$file->getClientOriginalExtension();
+                $ruta = "/videos/".$nombrearchivo;
+                \Storage::disk('archivos')->put($ruta, \File::get($file));
+                $data['path'] = $ruta;
+            }
+            $carousel = Carousel::create($data);
             return $this->successResponseCreate($this->show($carousel->id),trans('message.success'));
 
         }catch (\Exception $exception){
@@ -58,10 +67,32 @@ class CarouselController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $data =$request->all();
         $carousel = Carousel::find($id);
-        $carousel->update($request->all());
+        if ($request->path!="null"){
+            if($request->hasFile('path')){
+                if(\Storage::disk('archivos')->exists($carousel->path)){
+                    \Storage::disk('archivos')->delete($carousel->path);
+                }
+                $file = $request->file('path');
+                $nombrearchivo = 'file'.time().".".$file->getClientOriginalExtension();
+                $ruta = "/videos/".$nombrearchivo;
+                \Storage::disk('archivos')->put($ruta, \File::get($file));
+                $data['path'] = $ruta;
+            }
+        }else{
+            $data['path'] = $carousel->path;
+        }
+        $carousel->update($data);
         return $this->successResponseCreate($this->show($carousel->id),trans('message.success'));
     }
+
+    public function getFileContent($id){
+        $content = Carousel::find($id);
+        return \Storage::disk('archivos')->get($content->path);
+    }
+
 
     /**
      * Remove the specified resource from storage.
